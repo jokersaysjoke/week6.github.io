@@ -49,16 +49,13 @@ def signIn():
         cursor.execute('SELECT * FROM MEMBER WHERE USERNAME=%s ',(username,))
         record = cursor.fetchone()
         if record:
-            session["loggdin"] = True
             session["username"]=username
             session["password"]=password
             if password == record[3]:
                 return render_template("member.html",message=record[1])
             else: 
-                # return render_template("error.html",errorMessage="密碼錯誤")
                 return redirect("/error?message=密碼錯誤")
         else:
-            # return render_template("error.html",errorMessage="查無此帳號")
             return redirect("/error?message=查無此帳號")
 
     else:
@@ -67,7 +64,6 @@ def signIn():
 # #登出
 @app.route("/signOut")
 def signOut():
-    session.pop("loggedin",None)
     session.pop("username",None)
     session.pop("password",None)
     return redirect("/")
