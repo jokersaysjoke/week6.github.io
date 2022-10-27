@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, render_template, session, url_for
+from flask import Flask, request, redirect, render_template, session
 import mysql.connector
 
 connection = mysql.connector.connect(
@@ -49,10 +49,11 @@ def signIn():
         cursor.execute('SELECT * FROM MEMBER WHERE USERNAME=%s ',(username,))
         record = cursor.fetchone()
         if record:
-            session["username"]=username
-            session["password"]=password
             if password == record[3]:
-                return redirect(url_for("member",message=record[1]))
+                session['userid']=record[1]
+                session['username']=username
+                session['password']=password
+                return redirect("/member")
             else: 
                 return redirect("/error?message=密碼錯誤")
         else:
@@ -68,12 +69,13 @@ def signOut():
     session.pop("password",None)
     return redirect("/")
 #會員畫面
-@app.route("/member/<message>")
-def member(message):
+@app.route("/member")
+def member():
     if "username" in session:
+        message=session['userid']
         return render_template("member.html",message=message)
     else:
-        return "會員註冊失敗"
+        return redirect("/")
 #錯誤
 @app.route("/error")
 def error():
