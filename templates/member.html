@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>會員登入</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='logIn.css')}}" />
+    </head>
+    <body  >
+        <h1>歡迎光臨，這是會員頁</h1>
+        <h2>{{message}},歡迎登入系統</h2>
+        <form action="/signOut" style="text-align:center";>
+            <input type="submit" value="登出系統" /> 
+        </form>
+        
+    </body>
+</html>
