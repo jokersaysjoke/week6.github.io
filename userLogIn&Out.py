@@ -5,7 +5,7 @@ connection = mysql.connector.connect(
     host="localhost",
     port="3306",
     user="root",
-    password="", #輸入密碼
+    password="00000000", #輸入密碼
     database="WEBSITE"
 )
 
@@ -35,9 +35,9 @@ def signUp():
         if record is None:
             cursor.execute("INSERT INTO MEMBER(name, username, password) VALUES (%s,%s,%s)",(userid,username,userpassword))
             connection.commit()
-            return  render_template("logIn.html")
+            return  redirect("/")
         else:
-            return render_template("error.html",errorMessage='帳號已經被註冊')
+            return redirect("/error?message=帳號已經被註冊")
 
 #登入
 @app.route("/signIn", methods=['POST','GET'])
